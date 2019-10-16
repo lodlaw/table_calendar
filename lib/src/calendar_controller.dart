@@ -34,9 +34,16 @@ class CalendarController {
   /// Currently visible calendar format.
   CalendarFormat get calendarFormat => _calendarFormat.value;
 
+  set events(events) {
+    _events = events;
+  }
+
+  get events => _events;
+
   /// List of currently visible days.
-  List<DateTime> get visibleDays =>
-      _includeInvisibleDays ? _visibleDays.value : _visibleDays.value.where((day) => !_isExtraDay(day)).toList();
+  List<DateTime> get visibleDays => _includeInvisibleDays
+      ? _visibleDays.value
+      : _visibleDays.value.where((day) => !_isExtraDay(day)).toList();
 
   /// Map of currently visible events.
   Map<DateTime, List> get visibleEvents => Map.fromEntries(
@@ -142,6 +149,19 @@ class CalendarController {
   void dispose() {
     _calendarFormat.dispose();
     _visibleDays.dispose();
+  }
+
+  String hoursToText(double hours) {
+    String displayHours = hours.toInt().toString();
+    String displayMinutes = ((hours * 60) % 60).toInt().toString();
+
+    if (displayHours.length == 1) {
+      displayHours = '0' + displayHours;
+    }
+    if (displayMinutes.length == 1) {
+      displayMinutes = '0' + displayMinutes;
+    }
+    return "$displayHours:$displayMinutes";
   }
 
   /// Toggles calendar format. Same as using `FormatButton`.
@@ -260,7 +280,8 @@ class CalendarController {
       _focusedDay = _previousWeek(_focusedDay);
     } else {
       // in bottom row OR not visible
-      _focusedDay = _previousWeek(_focusedDay.subtract(const Duration(days: 7)));
+      _focusedDay =
+          _previousWeek(_focusedDay.subtract(const Duration(days: 7)));
     }
   }
 
@@ -320,7 +341,9 @@ class CalendarController {
 
   List<DateTime> _daysInMonth(DateTime month) {
     final first = _firstDayOfMonth(month);
-    final daysBefore = _startingDayOfWeek == StartingDayOfWeek.sunday ? first.weekday % 7 : first.weekday - 1;
+    final daysBefore = _startingDayOfWeek == StartingDayOfWeek.sunday
+        ? first.weekday % 7
+        : first.weekday - 1;
     final firstToDisplay = first.subtract(Duration(days: daysBefore));
 
     final last = _lastDayOfMonth(month);
@@ -339,6 +362,10 @@ class CalendarController {
     return _daysInRange(firstToDisplay, lastToDisplay).toList();
   }
 
+  List<DateTime> daysInMonth(DateTime month) {
+    return _daysInMonth(month);
+  }
+
   List<DateTime> _daysInWeek(DateTime week) {
     final first = _firstDayOfWeek(week);
     final last = _lastDayOfWeek(week);
@@ -349,14 +376,18 @@ class CalendarController {
   DateTime _firstDayOfWeek(DateTime day) {
     day = DateTime.utc(day.year, day.month, day.day, 12);
 
-    final decreaseNum = _startingDayOfWeek == StartingDayOfWeek.sunday ? day.weekday % 7 : day.weekday - 1;
+    final decreaseNum = _startingDayOfWeek == StartingDayOfWeek.sunday
+        ? day.weekday % 7
+        : day.weekday - 1;
     return day.subtract(Duration(days: decreaseNum));
   }
 
   DateTime _lastDayOfWeek(DateTime day) {
     day = DateTime.utc(day.year, day.month, day.day, 12);
 
-    final increaseNum = _startingDayOfWeek == StartingDayOfWeek.sunday ? day.weekday % 7 : day.weekday - 1;
+    final increaseNum = _startingDayOfWeek == StartingDayOfWeek.sunday
+        ? day.weekday % 7
+        : day.weekday - 1;
     return day.add(Duration(days: 7 - increaseNum));
   }
 
@@ -365,8 +396,9 @@ class CalendarController {
   }
 
   DateTime _lastDayOfMonth(DateTime month) {
-    final date =
-        month.month < 12 ? DateTime.utc(month.year, month.month + 1, 1, 12) : DateTime.utc(month.year + 1, 1, 1, 12);
+    final date = month.month < 12
+        ? DateTime.utc(month.year, month.month + 1, 1, 12)
+        : DateTime.utc(month.year + 1, 1, 1, 12);
     return date.subtract(const Duration(days: 1));
   }
 
@@ -408,13 +440,23 @@ class CalendarController {
     return _isSameDay(day, selectedDay);
   }
 
+  bool something1() {
+    return true;
+  }
+
   /// Returns true if `day` is the same day as `DateTime.now()`.
   bool isToday(DateTime day) {
     return _isSameDay(day, DateTime.now());
   }
 
   bool _isSameDay(DateTime dayA, DateTime dayB) {
-    return dayA.year == dayB.year && dayA.month == dayB.month && dayA.day == dayB.day;
+    return dayA.year == dayB.year &&
+        dayA.month == dayB.month &&
+        dayA.day == dayB.day;
+  }
+
+  bool isSameDay(DateTime dayA, DateTime dayB) {
+    return _isSameDay(dayA, dayB);
   }
 
   bool _isWeekend(DateTime day) {
