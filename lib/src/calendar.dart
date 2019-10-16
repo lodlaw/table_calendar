@@ -131,41 +131,40 @@ class TableCalendar extends StatefulWidget {
   // will get called at the end of init state function
   final Function widgetDidMountCallback;
 
-  TableCalendar(
-      {Key key,
-      @required this.calendarController,
-      this.locale,
-      this.events = const {},
-      this.holidays = const {},
-      this.onDaySelected,
-      this.onUnavailableDaySelected,
-      this.onVisibleDaysChanged,
-      this.initialSelectedDay,
-      this.startDay,
-      this.endDay,
-      this.initialCalendarFormat = CalendarFormat.month,
-      this.availableCalendarFormats = const {
-        CalendarFormat.month: 'Month',
-        CalendarFormat.twoWeeks: '2 weeks',
-        CalendarFormat.week: 'Week',
-      },
-      this.headerVisible = true,
-      this.rowHeight,
-      this.formatAnimation = FormatAnimation.slide,
-      this.startingDayOfWeek = StartingDayOfWeek.sunday,
-      this.dayHitTestBehavior = HitTestBehavior.deferToChild,
-      this.availableGestures = AvailableGestures.all,
-      this.simpleSwipeConfig = const SimpleSwipeConfig(
-        verticalThreshold: 25.0,
-        swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
-      ),
-      this.calendarStyle = const CalendarStyle(),
-      this.daysOfWeekStyle = const DaysOfWeekStyle(),
-      this.headerStyle = const HeaderStyle(),
-      this.builders = const CalendarBuilders(),
-      this.markersBuilder,
-      this.widgetDidMountCallback})
-      : assert(calendarController != null),
+  TableCalendar({
+    Key key,
+    @required this.calendarController,
+    this.locale,
+    this.events = const {},
+    this.holidays = const {},
+    this.onDaySelected,
+    this.onUnavailableDaySelected,
+    this.onVisibleDaysChanged,
+    this.initialSelectedDay,
+    this.startDay,
+    this.endDay,
+    this.initialCalendarFormat = CalendarFormat.month,
+    this.availableCalendarFormats = const {
+      CalendarFormat.month: 'Month',
+      CalendarFormat.twoWeeks: '2 weeks',
+      CalendarFormat.week: 'Week',
+    },
+    this.headerVisible = true,
+    this.rowHeight,
+    this.formatAnimation = FormatAnimation.slide,
+    this.startingDayOfWeek = StartingDayOfWeek.sunday,
+    this.dayHitTestBehavior = HitTestBehavior.deferToChild,
+    this.availableGestures = AvailableGestures.all,
+    this.simpleSwipeConfig = const SimpleSwipeConfig(
+      verticalThreshold: 25.0,
+      swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
+    ),
+    this.calendarStyle = const CalendarStyle(),
+    this.daysOfWeekStyle = const DaysOfWeekStyle(),
+    this.headerStyle = const HeaderStyle(),
+    this.builders = const CalendarBuilders(),
+    this.markersBuilder,
+  })  : assert(calendarController != null),
         assert(availableCalendarFormats.keys.contains(initialCalendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         super(key: key);
@@ -192,8 +191,6 @@ class _TableCalendarState extends State<TableCalendar>
       onVisibleDaysChanged: widget.onVisibleDaysChanged,
       includeInvisibleDays: widget.calendarStyle.outsideDaysVisible,
     );
-
-    widget.widgetDidMountCallback(widget.calendarController);
   }
 
   void _selectedDayCallback(DateTime day) {
