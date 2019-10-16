@@ -71,8 +71,6 @@ class CalendarController {
         }),
       );
 
-  void something() {}
-
   Map<DateTime, List> _events;
   Map<DateTime, List> _holidays;
   DateTime _focusedDay;
@@ -138,31 +136,6 @@ class CalendarController {
         }
       });
     }
-  }
-
-  void init({
-    @required Map<DateTime, List> events,
-    @required Map<DateTime, List> holidays,
-    @required DateTime initialDay,
-    @required CalendarFormat initialFormat,
-    @required Map<CalendarFormat, String> availableCalendarFormats,
-    @required bool useNextCalendarFormat,
-    @required StartingDayOfWeek startingDayOfWeek,
-    @required _SelectedDayCallback selectedDayCallback,
-    @required OnVisibleDaysChanged onVisibleDaysChanged,
-    @required bool includeInvisibleDays,
-  }) {
-    _init(
-        events: events,
-        holidays: holidays,
-        initialDay: initialDay,
-        initialFormat: initialFormat,
-        availableCalendarFormats: availableCalendarFormats,
-        useNextCalendarFormat: useNextCalendarFormat,
-        startingDayOfWeek: startingDayOfWeek,
-        selectedDayCallback: selectedDayCallback,
-        onVisibleDaysChanged: onVisibleDaysChanged,
-        includeInvisibleDays: includeInvisibleDays);
   }
 
   /// Disposes the controller.
