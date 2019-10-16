@@ -128,9 +128,6 @@ class TableCalendar extends StatefulWidget {
   /// will fallback to the default one in calendar_builders if it's not provided
   final FullListBuilder markersBuilder;
 
-  // will get called at the end of init state function
-  final Function widgetDidMountCallback;
-
   TableCalendar({
     Key key,
     @required this.calendarController,
