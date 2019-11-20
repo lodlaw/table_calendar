@@ -1,3 +1,31 @@
+## [2.2.1]
+
+* Added onHeaderTapped callback
+* Added onHeaderLongPressed callback
+* Fixed endDay issue
+
+## [2.2.0]
+
+* Added LongPress Gesture support
+* Added option to disable days based on a predicate
+* Added option to hide DaysOfWeek row
+* Added header Decoration
+* Added headerMargin property
+* Added headerPadding property
+* Added contentPadding property
+
+## [2.1.0]
+
+* Added dynamic events and holidays
+* Added StartingDayOfWeek for every weekday
+* Added support for custom weekend days
+* Added dowWeekdayBuilder and dowWeekendBuilder
+* Broadened intl dependency bounds
+* markersMaxAmount no longer affects markersBuilder
+* Fixed twoWeeks format programmatic issue
+* Fixed visibleDays issue
+* Fixed null dispose issue
+
 ## [2.0.2]
 
 * Updated dependencies

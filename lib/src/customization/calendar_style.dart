@@ -72,19 +72,16 @@ class CalendarStyle {
   /// * `false` - Today will have higher priority than SelectedDay
   final bool renderSelectedFirst;
 
+  /// Determines whether the row of days of the week should be rendered or not.
+  final bool renderDaysOfWeek;
+
+  /// Padding of `TableCalendar`'s content.
+  final EdgeInsets contentPadding;
+
   /// Specifies if event markers rendered for a day cell can overflow cell's boundaries.
   /// * `true` - Event markers will be drawn over the cell boundaries
   /// * `false` - Event markers will not be drawn over the cell boundaries and will be clipped if they are too big
   final bool canEventMarkersOverflow;
-
-  /// The background color of the calendar
-  final Color color;
-
-  /// The elevation of the calendar
-  final double elevation;
-
-  /// The secondary markers color
-  final Color markersSecondaryColor;
 
   const CalendarStyle({
     this.weekdayStyle = const TextStyle(),
@@ -99,7 +96,6 @@ class CalendarStyle {
     this.selectedColor = const Color(0xFF5C6BC0), // Material indigo[400]
     this.todayColor = const Color(0xFF9FA8DA), // Material indigo[200]
     this.markersColor = const Color(0xFF263238), // Material blueGrey[900]
-    this.markersSecondaryColor = const Color(0xFF263238), // Material blueGrey[900]
     this.markersAlignment = Alignment.bottomCenter,
     this.markersPositionTop,
     this.markersPositionBottom = 5.0,
@@ -108,8 +104,8 @@ class CalendarStyle {
     this.markersMaxAmount = 4,
     this.outsideDaysVisible = true,
     this.renderSelectedFirst = true,
+    this.renderDaysOfWeek = true,
+    this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 8.0, right: 8.0),
     this.canEventMarkersOverflow = false,
-    this.color = null,
-    this.elevation = 0,
   });
 }
