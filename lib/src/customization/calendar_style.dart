@@ -32,6 +32,9 @@ class CalendarStyle {
   /// Style of foreground Text for days outside of `startDay` - `endDay` Date range.
   final TextStyle unavailableStyle;
 
+  /// Style of days that have events
+  final TextStyle eventStyle;
+
   /// Background Color of selected day.
   final Color selectedColor;
 
@@ -83,6 +86,9 @@ class CalendarStyle {
   /// * `false` - Event markers will not be drawn over the cell boundaries and will be clipped if they are too big
   final bool canEventMarkersOverflow;
 
+  /// The background color of the cell that has event
+  final Color eventColor;
+
   const CalendarStyle({
     this.weekdayStyle = const TextStyle(),
     this.weekendStyle = const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
@@ -105,7 +111,9 @@ class CalendarStyle {
     this.outsideDaysVisible = true,
     this.renderSelectedFirst = true,
     this.renderDaysOfWeek = true,
-    this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 8.0, right: 8.0),
+    this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
     this.canEventMarkersOverflow = false,
+    this.eventColor,
+    this.eventStyle
   });
 }

@@ -579,21 +579,21 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
             ),
           );
         } else {
-          children.add(
-            Positioned(
-              top: widget.calendarStyle.markersPositionTop,
-              bottom: widget.calendarStyle.markersPositionBottom,
-              left: widget.calendarStyle.markersPositionLeft,
-              right: widget.calendarStyle.markersPositionRight,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: events
-                    .take(widget.calendarStyle.markersMaxAmount)
-                    .map((event) => _buildMarker(eventKey, event))
-                    .toList(),
-              ),
-            ),
-          );
+          // children.add(
+          //   Positioned(
+          //     top: widget.calendarStyle.markersPositionTop,
+          //     bottom: widget.calendarStyle.markersPositionBottom,
+          //     left: widget.calendarStyle.markersPositionLeft,
+          //     right: widget.calendarStyle.markersPositionRight,
+          //     child: Row(
+          //       mainAxisSize: MainAxisSize.min,
+          //       children: events
+          //           .take(widget.calendarStyle.markersMaxAmount)
+          //           .map((event) => _buildMarker(eventKey, event))
+          //           .toList(),
+          //     ),
+          //   ),
+          // );
         }
       }
 
@@ -623,6 +623,7 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
     final tIsOutside = widget.calendarController._isExtraDay(date);
     final tIsHoliday = widget.calendarController.visibleHolidays.containsKey(_getHolidayKey(date));
     final tIsWeekend = widget.calendarController._isWeekend(date, widget.weekendDays);
+    final tHasEvent = widget.calendarController._hasEvent(date, widget.events);
 
     final isUnavailable = widget.builders.unavailableDayBuilder != null && tIsUnavailable;
     final isSelected = widget.builders.selectedDayBuilder != null && tIsSelected;
@@ -664,6 +665,8 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
         isOutsideMonth: tIsOutside,
         isHoliday: tIsHoliday,
         calendarStyle: widget.calendarStyle,
+        hasEvent: tHasEvent,
+        rowHeight: widget.rowHeight,
       );
     }
   }
