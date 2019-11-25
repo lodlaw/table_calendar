@@ -161,46 +161,50 @@ class TableCalendar extends StatefulWidget {
 
   final Widget extraContent;
 
-  TableCalendar({
-    Key key,
-    @required this.calendarController,
-    this.locale,
-    this.events = const {},
-    this.holidays = const {},
-    this.onDaySelected,
-    this.onDayLongPressed,
-    this.onUnavailableDaySelected,
-    this.onUnavailableDayLongPressed,
-    this.onHeaderTapped,
-    this.onHeaderLongPressed,
-    this.onVisibleDaysChanged,
-    this.initialSelectedDay,
-    this.startDay,
-    this.endDay,
-    this.weekendDays = const [DateTime.saturday, DateTime.sunday],
-    this.initialCalendarFormat = CalendarFormat.month,
-    this.availableCalendarFormats = const {
-      CalendarFormat.month: 'Month',
-      CalendarFormat.twoWeeks: '2 weeks',
-      CalendarFormat.week: 'Week',
-    },
-    this.headerVisible = true,
-    this.enabledDayPredicate,
-    this.rowHeight,
-    this.formatAnimation = FormatAnimation.slide,
-    this.startingDayOfWeek = StartingDayOfWeek.sunday,
-    this.dayHitTestBehavior = HitTestBehavior.deferToChild,
-    this.availableGestures = AvailableGestures.all,
-    this.simpleSwipeConfig = const SimpleSwipeConfig(
-      verticalThreshold: 25.0,
-      swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
-    ),
-    this.calendarStyle = const CalendarStyle(),
-    this.daysOfWeekStyle = const DaysOfWeekStyle(),
-    this.headerStyle = const HeaderStyle(),
-    this.builders = const CalendarBuilders(),
-    this.extraContent
-  })  : assert(calendarController != null),
+  /// A list of selected dates
+  final List<DateTime> selectedDates;
+
+  TableCalendar(
+      {Key key,
+      @required this.calendarController,
+      this.locale,
+      this.events = const {},
+      this.holidays = const {},
+      this.onDaySelected,
+      this.onDayLongPressed,
+      this.onUnavailableDaySelected,
+      this.onUnavailableDayLongPressed,
+      this.onHeaderTapped,
+      this.onHeaderLongPressed,
+      this.onVisibleDaysChanged,
+      this.initialSelectedDay,
+      this.startDay,
+      this.endDay,
+      this.weekendDays = const [DateTime.saturday, DateTime.sunday],
+      this.initialCalendarFormat = CalendarFormat.month,
+      this.availableCalendarFormats = const {
+        CalendarFormat.month: 'Month',
+        CalendarFormat.twoWeeks: '2 weeks',
+        CalendarFormat.week: 'Week',
+      },
+      this.headerVisible = true,
+      this.enabledDayPredicate,
+      this.rowHeight,
+      this.formatAnimation = FormatAnimation.slide,
+      this.startingDayOfWeek = StartingDayOfWeek.sunday,
+      this.dayHitTestBehavior = HitTestBehavior.deferToChild,
+      this.availableGestures = AvailableGestures.all,
+      this.simpleSwipeConfig = const SimpleSwipeConfig(
+        verticalThreshold: 25.0,
+        swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
+      ),
+      this.calendarStyle = const CalendarStyle(),
+      this.daysOfWeekStyle = const DaysOfWeekStyle(),
+      this.headerStyle = const HeaderStyle(),
+      this.builders = const CalendarBuilders(),
+      this.extraContent,
+      this.selectedDates})
+      : assert(calendarController != null),
         assert(availableCalendarFormats.keys.contains(initialCalendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays != null),
@@ -670,9 +674,11 @@ class _TableCalendarState extends State<TableCalendar>
 
   Widget _buildCellContent(DateTime date) {
     final eventKey = _getEventKey(date);
-
     final tIsUnavailable = _isDayUnavailable(date);
-    final tIsSelected = widget.calendarController.isSelected(date);
+    bool tIsSelected = widget.calendarController.isSelected(date);
+    if (widget.selectedDates != null) {
+      tIsSelected = widget.calendarController._isSelectedDate(date, widget.selectedDates);
+    }
     final tIsToday = widget.calendarController.isToday(date);
     final tIsOutside = widget.calendarController._isExtraDay(date);
     final tIsHoliday = widget.calendarController.visibleHolidays
@@ -746,22 +752,6 @@ class _TableCalendarState extends State<TableCalendar>
         calendarStyle: widget.calendarStyle,
         hasEvent: tHasEvent,
         rowHeight: widget.rowHeight,
-      );
-    }
-  }
-
-  Widget _buildMarker(DateTime date, dynamic event) {
-    if (widget.builders.singleMarkerBuilder != null) {
-      return widget.builders.singleMarkerBuilder(context, date, event);
-    } else {
-      return Container(
-        width: 8.0,
-        height: 8.0,
-        margin: const EdgeInsets.symmetric(horizontal: 0.3),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: widget.calendarStyle.markersColor,
-        ),
       );
     }
   }

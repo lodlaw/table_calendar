@@ -491,4 +491,13 @@ class CalendarController {
       return value;
     }
   }
+
+  bool _isSelectedDate(DateTime date, List<DateTime> selectedDates) {
+    for (int i = 0; i < selectedDates.length; i++) {
+      if (_isSameDay(date, selectedDates[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
