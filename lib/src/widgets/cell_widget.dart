@@ -34,8 +34,8 @@ class _CellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const margin = 6.0;
-    final width = rowHeight + margin * 2;
-    print(width);
+    final width = rowHeight - margin * 2;
+    // print(width);
 
     return AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -49,7 +49,7 @@ class _CellWidget extends StatelessWidget {
                   color: calendarStyle.eventColor)
               : null,
           height: double.infinity,
-          width: rowHeight - margin * 2,
+          width: width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

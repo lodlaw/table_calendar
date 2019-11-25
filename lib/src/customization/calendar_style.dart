@@ -80,6 +80,7 @@ class CalendarStyle {
 
   /// Padding of `TableCalendar`'s content.
   final EdgeInsets contentPadding;
+  final BoxDecoration contentDecoration;
 
   /// Specifies if event markers rendered for a day cell can overflow cell's boundaries.
   /// * `true` - Event markers will be drawn over the cell boundaries
@@ -114,6 +115,7 @@ class CalendarStyle {
     this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
     this.canEventMarkersOverflow = false,
     this.eventColor,
-    this.eventStyle
+    this.eventStyle,
+    this.contentDecoration = const BoxDecoration(),
   });
 }
