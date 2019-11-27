@@ -80,6 +80,7 @@ class CalendarStyle {
 
   /// Padding of `TableCalendar`'s content.
   final EdgeInsets contentPadding;
+  final EdgeInsets contentMargin;
   final BoxDecoration contentDecoration;
 
   /// Specifies if event markers rendered for a day cell can overflow cell's boundaries.
@@ -91,6 +92,7 @@ class CalendarStyle {
   final Color eventColor;
 
   const CalendarStyle({
+    this.contentMargin = const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
     this.weekdayStyle = const TextStyle(),
     this.weekendStyle = const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
     this.holidayStyle = const TextStyle(color: const Color(0xFFF44336)), // Material red[500]

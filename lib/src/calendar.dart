@@ -358,6 +358,7 @@ class _TableCalendarState extends State<TableCalendar>
           if (widget.extraContent != null) widget.extraContent,
           Container(
             padding: widget.calendarStyle.contentPadding,
+            margin: widget.calendarStyle.contentMargin,
             decoration: widget.calendarStyle.contentDecoration,
             child: _buildCalendarContent(),
           ),
