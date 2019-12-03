@@ -14,6 +14,7 @@ class _CellWidget extends StatelessWidget {
   final CalendarStyle calendarStyle;
   final bool hasEvent;
   final double rowHeight;
+  final String mode;
 
   const _CellWidget({
     Key key,
@@ -25,6 +26,7 @@ class _CellWidget extends StatelessWidget {
     this.isOutsideMonth = false,
     this.isHoliday = false,
     this.hasEvent = false,
+    this.mode = "single",
     @required this.rowHeight,
     @required this.calendarStyle,
   })  : assert(text != null),
@@ -33,9 +35,8 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const margin = 6.0;
-    final width = rowHeight - margin * 2;
-    // print(width);
+    const margin = 3.0;
+    final width = rowHeight + margin * 4;
 
     return AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -43,22 +44,49 @@ class _CellWidget extends StatelessWidget {
         margin: const EdgeInsets.all(margin),
         alignment: Alignment.center,
         child: Container(
-          decoration: hasEvent
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: calendarStyle.eventColor)
-              : null,
           height: double.infinity,
           width: width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                text,
-                style: _buildCellTextStyle(),
-                textAlign: TextAlign.center,
-              ),
-            ],
+          child: Container(
+            width: double.infinity,
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 5.0),
+                        decoration: hasEvent
+                            ? BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: calendarStyle.eventColor)
+                            : null,
+                        child: Text(
+                          text,
+                          style: _buildCellTextStyle(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                if (mode == "multiple" && isSelected)
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                            margin: EdgeInsets.only(bottom: 1, right: 1),
+                            child: Image.asset('assets/images/tick.png')),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ));
   }
@@ -70,15 +98,7 @@ class _CellWidget extends StatelessWidget {
     } else if (isToday) {
       color = calendarStyle.todayColor;
     }
-    return BoxDecoration(
-      color: color,
-      image: isSelected
-          ? DecorationImage(
-              image: AssetImage("assets/images/selectedDayBackground.png"),
-              fit: BoxFit.cover,
-            )
-          : null,
-    );
+    return BoxDecoration(color: color, borderRadius: BorderRadius.circular(8));
   }
 
   TextStyle _buildCellTextStyle() {

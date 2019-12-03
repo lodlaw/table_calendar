@@ -56,6 +56,8 @@ class TableCalendar extends StatefulWidget {
   /// If nothing is provided, a default locale will be used.
   final dynamic locale;
 
+  final String mode;
+
   /// `Map` of events.
   /// Each `DateTime` inside this `Map` should get its own `List` of objects (i.e. events).
   final Map<DateTime, List> events;
@@ -168,6 +170,7 @@ class TableCalendar extends StatefulWidget {
       {Key key,
       @required this.calendarController,
       this.locale,
+      this.mode,
       this.events = const {},
       this.holidays = const {},
       this.onDaySelected,
@@ -223,7 +226,7 @@ class _TableCalendarState extends State<TableCalendar>
   @override
   void initState() {
     super.initState();
-
+    
     widget.calendarController._init(
       events: widget.events,
       holidays: widget.holidays,
@@ -753,6 +756,7 @@ class _TableCalendarState extends State<TableCalendar>
         calendarStyle: widget.calendarStyle,
         hasEvent: tHasEvent,
         rowHeight: widget.rowHeight,
+        mode: widget.mode
       );
     }
   }
