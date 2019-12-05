@@ -226,7 +226,7 @@ class _TableCalendarState extends State<TableCalendar>
   @override
   void initState() {
     super.initState();
-    
+
     widget.calendarController._init(
       events: widget.events,
       holidays: widget.holidays,
@@ -353,20 +353,20 @@ class _TableCalendarState extends State<TableCalendar>
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (widget.headerVisible) _buildHeader(),
-          if (widget.extraContent != null) widget.extraContent,
-          Container(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        if (widget.headerVisible) _buildHeader(),
+        if (widget.extraContent != null) widget.extraContent,
+        Expanded(
+          child: Container(
             padding: widget.calendarStyle.contentPadding,
             margin: widget.calendarStyle.contentMargin,
             decoration: widget.calendarStyle.contentDecoration,
             child: _buildCalendarContent(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -681,7 +681,8 @@ class _TableCalendarState extends State<TableCalendar>
     final tIsUnavailable = _isDayUnavailable(date);
     bool tIsSelected = widget.calendarController.isSelected(date);
     if (widget.selectedDates != null) {
-      tIsSelected = widget.calendarController._isSelectedDate(date, widget.selectedDates);
+      tIsSelected =
+          widget.calendarController._isSelectedDate(date, widget.selectedDates);
     }
     final tIsToday = widget.calendarController.isToday(date);
     final tIsOutside = widget.calendarController._isExtraDay(date);
@@ -746,18 +747,17 @@ class _TableCalendarState extends State<TableCalendar>
           context, date, widget.calendarController.visibleEvents[eventKey]);
     } else {
       return _CellWidget(
-        text: '${date.day}',
-        isUnavailable: tIsUnavailable,
-        isSelected: tIsSelected,
-        isToday: tIsToday,
-        isWeekend: tIsWeekend,
-        isOutsideMonth: tIsOutside,
-        isHoliday: tIsHoliday,
-        calendarStyle: widget.calendarStyle,
-        hasEvent: tHasEvent,
-        rowHeight: widget.rowHeight,
-        mode: widget.mode
-      );
+          text: '${date.day}',
+          isUnavailable: tIsUnavailable,
+          isSelected: tIsSelected,
+          isToday: tIsToday,
+          isWeekend: tIsWeekend,
+          isOutsideMonth: tIsOutside,
+          isHoliday: tIsHoliday,
+          calendarStyle: widget.calendarStyle,
+          hasEvent: tHasEvent,
+          rowHeight: widget.rowHeight,
+          mode: widget.mode);
     }
   }
 }
