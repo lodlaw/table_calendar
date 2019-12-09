@@ -56,8 +56,7 @@ class _CellWidget extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 3.0, horizontal: 5.0),
+                        padding: EdgeInsets.all(0),
                         decoration: hasEvent
                             ? BoxDecoration(
                                 shape: BoxShape.circle,
@@ -98,7 +97,7 @@ class _CellWidget extends StatelessWidget {
     } else if (isToday) {
       color = calendarStyle.todayColor;
     }
-    return BoxDecoration(color: color, borderRadius: BorderRadius.circular(8));
+    return BoxDecoration(color: color);
   }
 
   TextStyle _buildCellTextStyle() {
