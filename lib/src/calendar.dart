@@ -166,6 +166,8 @@ class TableCalendar extends StatefulWidget {
   /// A list of selected dates
   final List<DateTime> selectedDates;
 
+  final Function onTapCancelMultipleSelections;
+
   TableCalendar(
       {Key key,
       @required this.calendarController,
@@ -206,7 +208,8 @@ class TableCalendar extends StatefulWidget {
       this.headerStyle = const HeaderStyle(),
       this.builders = const CalendarBuilders(),
       this.extraContent,
-      this.selectedDates})
+      this.selectedDates,
+      @required this.onTapCancelMultipleSelections})
       : assert(calendarController != null),
         assert(availableCalendarFormats.keys.contains(initialCalendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
@@ -353,6 +356,10 @@ class _TableCalendarState extends State<TableCalendar>
 
   @override
   Widget build(BuildContext context) {
+    double paddingTop = 0.0;
+    if (widget.mode != 'multiple') {
+      paddingTop = widget.calendarStyle.contentPadding.top;
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -360,7 +367,8 @@ class _TableCalendarState extends State<TableCalendar>
         if (widget.extraContent != null) widget.extraContent,
         Expanded(
           child: Container(
-            padding: widget.calendarStyle.contentPadding,
+            padding: widget.calendarStyle.contentPadding.copyWith(
+                top: paddingTop),
             margin: widget.calendarStyle.contentMargin,
             decoration: widget.calendarStyle.contentDecoration,
             child: _buildCalendarContent(),
@@ -493,7 +501,38 @@ class _TableCalendarState extends State<TableCalendar>
 
     return Container(
       key: key,
-      child: wrappedChild,
+      child: Column(
+        children: <Widget>[
+          if (widget.mode != 'single')
+            Container(
+              color: widget.calendarStyle.cancelMultipleSectionsBackground,
+              height: widget.calendarStyle.contentPadding.top - 5,
+              margin: EdgeInsets.only(bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: widget.onTapCancelMultipleSelections,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text("CANCEL",
+                          style: widget.calendarStyle.weekdayStyle),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: widget.onTapCancelMultipleSelections,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 18.5),
+                      child:
+                          Text("X", style: widget.calendarStyle.weekdayStyle),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          wrappedChild,
+        ],
+      ),
     );
   }
 

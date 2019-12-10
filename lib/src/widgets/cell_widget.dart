@@ -56,7 +56,7 @@ class _CellWidget extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       child: Container(
-                        padding: EdgeInsets.all(4),
+                        padding: EdgeInsets.all(3.25),
                         decoration: hasEvent
                             ? BoxDecoration(
                                 shape: BoxShape.circle,

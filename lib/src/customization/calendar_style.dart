@@ -91,33 +91,44 @@ class CalendarStyle {
   /// The background color of the cell that has event
   final Color eventColor;
 
-  const CalendarStyle({
-    this.contentMargin = const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
-    this.weekdayStyle = const TextStyle(),
-    this.weekendStyle = const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
-    this.holidayStyle = const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
-    this.selectedStyle = const TextStyle(color: const Color(0xFFFAFAFA), fontSize: 16.0), // Material grey[50]
-    this.todayStyle = const TextStyle(color: const Color(0xFFFAFAFA), fontSize: 16.0), // Material grey[50]
-    this.outsideStyle = const TextStyle(color: const Color(0xFF9E9E9E)), // Material grey[500]
-    this.outsideWeekendStyle = const TextStyle(color: const Color(0xFFEF9A9A)), // Material red[200]
-    this.outsideHolidayStyle = const TextStyle(color: const Color(0xFFEF9A9A)), // Material red[200]
-    this.unavailableStyle = const TextStyle(color: const Color(0xFFBFBFBF)),
-    this.selectedColor = const Color(0xFF5C6BC0), // Material indigo[400]
-    this.todayColor = const Color(0xFF9FA8DA), // Material indigo[200]
-    this.markersColor = const Color(0xFF263238), // Material blueGrey[900]
-    this.markersAlignment = Alignment.bottomCenter,
-    this.markersPositionTop,
-    this.markersPositionBottom = 5.0,
-    this.markersPositionLeft,
-    this.markersPositionRight,
-    this.markersMaxAmount = 4,
-    this.outsideDaysVisible = true,
-    this.renderSelectedFirst = true,
-    this.renderDaysOfWeek = true,
-    this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
-    this.canEventMarkersOverflow = false,
-    this.eventColor,
-    this.eventStyle,
-    this.contentDecoration = const BoxDecoration(),
-  });
+  final Color cancelMultipleSectionsBackground;
+
+  const CalendarStyle(
+      {this.contentMargin =
+          const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
+      this.weekdayStyle = const TextStyle(),
+      this.weekendStyle =
+          const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
+      this.holidayStyle =
+          const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
+      this.selectedStyle = const TextStyle(
+          color: const Color(0xFFFAFAFA), fontSize: 16.0), // Material grey[50]
+      this.todayStyle = const TextStyle(
+          color: const Color(0xFFFAFAFA), fontSize: 16.0), // Material grey[50]
+      this.outsideStyle =
+          const TextStyle(color: const Color(0xFF9E9E9E)), // Material grey[500]
+      this.outsideWeekendStyle =
+          const TextStyle(color: const Color(0xFFEF9A9A)), // Material red[200]
+      this.outsideHolidayStyle =
+          const TextStyle(color: const Color(0xFFEF9A9A)), // Material red[200]
+      this.unavailableStyle = const TextStyle(color: const Color(0xFFBFBFBF)),
+      this.selectedColor = const Color(0xFF5C6BC0), // Material indigo[400]
+      this.todayColor = const Color(0xFF9FA8DA), // Material indigo[200]
+      this.markersColor = const Color(0xFF263238), // Material blueGrey[900]
+      this.markersAlignment = Alignment.bottomCenter,
+      this.markersPositionTop,
+      this.markersPositionBottom = 5.0,
+      this.markersPositionLeft,
+      this.markersPositionRight,
+      this.markersMaxAmount = 4,
+      this.outsideDaysVisible = true,
+      this.renderSelectedFirst = true,
+      this.renderDaysOfWeek = true,
+      this.contentPadding =
+          const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
+      this.canEventMarkersOverflow = false,
+      this.eventColor,
+      this.eventStyle,
+      this.contentDecoration = const BoxDecoration(),
+      this.cancelMultipleSectionsBackground = Colors.blue});
 }
