@@ -14,7 +14,7 @@ class _CellWidget extends StatelessWidget {
   final CalendarStyle calendarStyle;
   final bool hasEvent;
   final double rowHeight;
-  final String mode;
+  final SelectionMode selectionMode;
 
   const _CellWidget({
     Key key,
@@ -26,7 +26,7 @@ class _CellWidget extends StatelessWidget {
     this.isOutsideMonth = false,
     this.isHoliday = false,
     this.hasEvent = false,
-    this.mode = "single",
+    @required this.selectionMode,
     @required this.rowHeight,
     @required this.calendarStyle,
   })  : assert(text != null),
@@ -71,7 +71,7 @@ class _CellWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (mode == "multiple" && isSelected)
+                if (selectionMode == SelectionMode.multiple && isSelected)
                   Container(
                     width: double.infinity,
                     child: Column(

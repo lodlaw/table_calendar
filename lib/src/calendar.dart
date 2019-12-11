@@ -39,6 +39,9 @@ enum StartingDayOfWeek {
   sunday
 }
 
+/// Current selection mode (when multiple cells are selected and one cell is selected)
+enum SelectionMode { single, multiple }
+
 int _getWeekdayNumber(StartingDayOfWeek weekday) {
   return StartingDayOfWeek.values.indexOf(weekday) + 1;
 }
@@ -56,7 +59,8 @@ class TableCalendar extends StatefulWidget {
   /// If nothing is provided, a default locale will be used.
   final dynamic locale;
 
-  final String mode;
+  /// The current selection mode of the calendar
+  final SelectionMode selectionMode;
 
   /// `Map` of events.
   /// Each `DateTime` inside this `Map` should get its own `List` of objects (i.e. events).
@@ -172,7 +176,7 @@ class TableCalendar extends StatefulWidget {
       {Key key,
       @required this.calendarController,
       this.locale,
-      this.mode,
+      this.selectionMode,
       this.events = const {},
       this.holidays = const {},
       this.onDaySelected,
@@ -231,17 +235,17 @@ class _TableCalendarState extends State<TableCalendar>
     super.initState();
 
     widget.calendarController._init(
-      events: widget.events,
-      holidays: widget.holidays,
-      initialDay: widget.initialSelectedDay,
-      initialFormat: widget.initialCalendarFormat,
-      availableCalendarFormats: widget.availableCalendarFormats,
-      useNextCalendarFormat: widget.headerStyle.formatButtonShowsNext,
-      startingDayOfWeek: widget.startingDayOfWeek,
-      selectedDayCallback: _selectedDayCallback,
-      onVisibleDaysChanged: widget.onVisibleDaysChanged,
-      includeInvisibleDays: widget.calendarStyle.outsideDaysVisible,
-    );
+        events: widget.events,
+        holidays: widget.holidays,
+        initialDay: widget.initialSelectedDay,
+        initialFormat: widget.initialCalendarFormat,
+        availableCalendarFormats: widget.availableCalendarFormats,
+        useNextCalendarFormat: widget.headerStyle.formatButtonShowsNext,
+        startingDayOfWeek: widget.startingDayOfWeek,
+        selectedDayCallback: _selectedDayCallback,
+        onVisibleDaysChanged: widget.onVisibleDaysChanged,
+        includeInvisibleDays: widget.calendarStyle.outsideDaysVisible,
+        selectionMode: widget.selectionMode);
   }
 
   @override
@@ -357,7 +361,7 @@ class _TableCalendarState extends State<TableCalendar>
   @override
   Widget build(BuildContext context) {
     double paddingTop = 0.0;
-    if (widget.mode != 'multiple') {
+    if (widget.selectionMode == SelectionMode.single) {
       paddingTop = widget.calendarStyle.contentPadding.top;
     }
     return Column(
@@ -367,8 +371,8 @@ class _TableCalendarState extends State<TableCalendar>
         if (widget.extraContent != null) widget.extraContent,
         Expanded(
           child: Container(
-            padding: widget.calendarStyle.contentPadding.copyWith(
-                top: paddingTop),
+            padding:
+                widget.calendarStyle.contentPadding.copyWith(top: paddingTop),
             margin: widget.calendarStyle.contentMargin,
             decoration: widget.calendarStyle.contentDecoration,
             child: _buildCalendarContent(),
@@ -503,7 +507,7 @@ class _TableCalendarState extends State<TableCalendar>
       key: key,
       child: Column(
         children: <Widget>[
-          if (widget.mode != 'single')
+          if (widget.selectionMode == SelectionMode.multiple)
             Container(
               color: widget.calendarStyle.cancelMultipleSectionsBackground,
               height: widget.calendarStyle.contentPadding.top - 5,
@@ -673,22 +677,6 @@ class _TableCalendarState extends State<TableCalendar>
               holidays,
             ),
           );
-        } else {
-          // children.add(
-          //   Positioned(
-          //     top: widget.calendarStyle.markersPositionTop,
-          //     bottom: widget.calendarStyle.markersPositionBottom,
-          //     left: widget.calendarStyle.markersPositionLeft,
-          //     right: widget.calendarStyle.markersPositionRight,
-          //     child: Row(
-          //       mainAxisSize: MainAxisSize.min,
-          //       children: events
-          //           .take(widget.calendarStyle.markersMaxAmount)
-          //           .map((event) => _buildMarker(eventKey, event))
-          //           .toList(),
-          //     ),
-          //   ),
-          // );
         }
       }
 
@@ -796,7 +784,7 @@ class _TableCalendarState extends State<TableCalendar>
           calendarStyle: widget.calendarStyle,
           hasEvent: tHasEvent,
           rowHeight: widget.rowHeight,
-          mode: widget.mode);
+          selectionMode: widget.selectionMode);
     }
   }
 }

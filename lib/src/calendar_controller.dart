@@ -78,6 +78,10 @@ class CalendarController {
     );
   }
 
+  SelectionMode get selectionMode {
+    return _selectionMode;
+  }
+
   Map<DateTime, List> _events;
   Map<DateTime, List> _holidays;
   DateTime _focusedDay;
@@ -93,6 +97,7 @@ class CalendarController {
   bool _useNextCalendarFormat;
   bool _includeInvisibleDays;
   _SelectedDayCallback _selectedDayCallback;
+  SelectionMode _selectionMode;
 
   void _init({
     @required Map<DateTime, List> events,
@@ -105,6 +110,7 @@ class CalendarController {
     @required _SelectedDayCallback selectedDayCallback,
     @required OnVisibleDaysChanged onVisibleDaysChanged,
     @required bool includeInvisibleDays,
+    @required SelectionMode selectionMode
   }) {
     _events = events;
     _holidays = holidays;
@@ -113,6 +119,7 @@ class CalendarController {
     _useNextCalendarFormat = useNextCalendarFormat;
     _selectedDayCallback = selectedDayCallback;
     _includeInvisibleDays = includeInvisibleDays;
+    _selectionMode = selectionMode;
 
     _pageId = 0;
     _dx = 0;
