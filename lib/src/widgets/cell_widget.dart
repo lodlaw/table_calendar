@@ -96,6 +96,8 @@ class _CellWidget extends StatelessWidget {
       color = calendarStyle.selectedColor;
     } else if (isToday) {
       color = calendarStyle.todayColor;
+    } else if (isWeekend) {
+      color = calendarStyle.weekendColor;
     }
     return BoxDecoration(color: color);
   }
