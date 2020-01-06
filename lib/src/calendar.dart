@@ -394,17 +394,20 @@ class _TableCalendarState extends State<TableCalendar>
         child: GestureDetector(
           onTap: _onHeaderTapped,
           onLongPress: _onHeaderLongPressed,
-          child: Text(
-            widget.headerStyle.titleTextBuilder != null
-                ? widget.headerStyle.titleTextBuilder(
-                    widget.calendarController.focusedDay, widget.locale)
-                : DateFormat.yMMMM(widget.locale)
-                    .format(widget.calendarController.focusedDay),
-            style: widget.headerStyle.titleTextStyle,
-            textAlign: widget.headerStyle.centerHeaderTitle
-                ? TextAlign.center
-                : TextAlign.start,
-          ),
+          child: widget.headerStyle.titleBuilder != null
+              ? widget.headerStyle.titleBuilder(
+                  widget.calendarController.focusedDay, widget.locale)
+              : Text(
+                  widget.headerStyle.titleTextBuilder != null
+                      ? widget.headerStyle.titleTextBuilder(
+                          widget.calendarController.focusedDay, widget.locale)
+                      : DateFormat.yMMMM(widget.locale)
+                          .format(widget.calendarController.focusedDay),
+                  style: widget.headerStyle.titleTextStyle,
+                  textAlign: widget.headerStyle.centerHeaderTitle
+                      ? TextAlign.center
+                      : TextAlign.start,
+                ),
         ),
       ),
       _CustomIconButton(
