@@ -44,10 +44,10 @@ class _CellWidget extends StatelessWidget {
         margin: const EdgeInsets.all(margin),
         alignment: Alignment.center,
         child: Container(
-          height: double.infinity,
-          width: width,
           child: Container(
-            width: double.infinity,
+            color: isSelected
+                ? calendarStyle.selectedColor
+                : (isWeekend ? calendarStyle.weekendBackgroundColor : null),
             child: Stack(
               children: <Widget>[
                 Column(
@@ -56,7 +56,7 @@ class _CellWidget extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       child: Container(
-                        padding: EdgeInsets.all(3.25),
+                        padding: EdgeInsets.all(5.25),
                         decoration: hasEvent
                             ? BoxDecoration(
                                 shape: BoxShape.circle,
@@ -71,19 +71,6 @@ class _CellWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (selectionMode == SelectionMode.multiple && isSelected)
-                  Container(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                            margin: EdgeInsets.only(bottom: 1, right: 1),
-                            child: Image.asset('assets/images/tick.png')),
-                      ],
-                    ),
-                  ),
               ],
             ),
           ),

@@ -518,14 +518,6 @@ class _TableCalendarState extends State<TableCalendar>
                   GestureDetector(
                     onTap: widget.onTapCancelMultipleSelections,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text("CANCEL",
-                          style: widget.calendarStyle.weekdayStyle),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: widget.onTapCancelMultipleSelections,
-                    child: Padding(
                       padding: const EdgeInsets.only(right: 18.5),
                       child:
                           Text("X", style: widget.calendarStyle.weekdayStyle),
@@ -594,7 +586,7 @@ class _TableCalendarState extends State<TableCalendar>
 
     return Table(
       // Makes this Table fill its parent horizontally
-      defaultColumnWidth: FractionColumnWidth(1.0 / daysInWeek),
+      defaultColumnWidth: FlexColumnWidth(widget.rowHeight),
       children: children,
     );
   }
@@ -639,8 +631,10 @@ class _TableCalendarState extends State<TableCalendar>
         constraints: BoxConstraints(
           maxHeight: widget.rowHeight ?? constraints.maxWidth,
           minHeight: widget.rowHeight ?? constraints.maxWidth,
+          maxWidth: widget.rowHeight ?? constraints.maxWidth,
+          minWidth: widget.rowHeight ?? constraints.maxWidth,
         ),
-        child: _buildCell(date),
+        child: Container(child: _buildCell(date)),
       ),
     );
   }
