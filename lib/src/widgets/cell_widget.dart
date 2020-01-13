@@ -35,13 +35,13 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const margin = 4.1;
+    final margin = calendarStyle.cellMargin;
 
     return AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         decoration: _buildCellDecoration(),
-        margin: const EdgeInsets.all(margin),
-        alignment: Alignment.center,  
+        margin: EdgeInsets.all(margin),
+        alignment: Alignment.center,
         child: Container(
           child: Container(
             color: isSelected

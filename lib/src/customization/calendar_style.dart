@@ -99,6 +99,9 @@ class CalendarStyle {
   /// The background color of days in the weekend
   final Color weekendBackgroundColor;
 
+  /// The margin of the cell
+  final double cellMargin;
+
   const CalendarStyle(
       {this.contentMargin =
           const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
@@ -138,5 +141,6 @@ class CalendarStyle {
       this.eventStyle,
       this.contentDecoration = const BoxDecoration(),
       this.cancelMultipleSectionsBackground = Colors.blue,
-      this.weekendBackgroundColor = const Color(0xFFE4E4E4)});
+      this.weekendBackgroundColor = const Color(0xFFE4E4E4),
+      this.cellMargin = 3.1});
 }
