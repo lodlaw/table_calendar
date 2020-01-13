@@ -35,14 +35,13 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const margin = 3.0;
-    final width = rowHeight + margin * 4;
+    const margin = 4.1;
 
     return AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         decoration: _buildCellDecoration(),
         margin: const EdgeInsets.all(margin),
-        alignment: Alignment.center,
+        alignment: Alignment.center,  
         child: Container(
           child: Container(
             color: isSelected
