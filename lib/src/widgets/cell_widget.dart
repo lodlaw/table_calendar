@@ -91,6 +91,8 @@ class _CellWidget extends StatelessWidget {
   TextStyle _buildCellTextStyle() {
     if (isUnavailable) {
       return calendarStyle.unavailableStyle;
+    } else if (isOutsideMonth && isHoliday) {
+      return calendarStyle.outsideHolidayStyle;
     } else if (isHoliday) {
       return calendarStyle.holidayStyle;
     } else if (hasEvent) {
@@ -101,8 +103,6 @@ class _CellWidget extends StatelessWidget {
       return calendarStyle.todayStyle;
     } else if (isSelected) {
       return calendarStyle.selectedStyle;
-    } else if (isOutsideMonth && isHoliday) {
-      return calendarStyle.outsideHolidayStyle;
     } else if (isOutsideMonth && isWeekend) {
       return calendarStyle.outsideWeekendStyle;
     } else if (isOutsideMonth) {

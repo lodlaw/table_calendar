@@ -272,12 +272,16 @@ class _TableCalendarState extends State<TableCalendar>
     setState(() {
       widget.calendarController._selectPrevious();
     });
+    final selectedDay = widget.calendarController.selectedDay;
+    _selectDay(DateTime(selectedDay.year, selectedDay.month - 1, 1));
   }
 
   void _selectNext() {
     setState(() {
       widget.calendarController._selectNext();
     });
+    final selectedDay = widget.calendarController.selectedDay;
+    _selectDay(DateTime(selectedDay.year, selectedDay.month + 1, 1));
   }
 
   void _selectDay(DateTime day) {
