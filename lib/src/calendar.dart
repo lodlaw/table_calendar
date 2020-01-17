@@ -172,6 +172,8 @@ class TableCalendar extends StatefulWidget {
 
   final Function onTapCancelMultipleSelections;
 
+  final bool defaultFirstDayOfTheMonth;
+
   TableCalendar(
       {Key key,
       @required this.calendarController,
@@ -213,6 +215,7 @@ class TableCalendar extends StatefulWidget {
       this.builders = const CalendarBuilders(),
       this.extraContent,
       this.selectedDates,
+      this.defaultFirstDayOfTheMonth = true,
       @required this.onTapCancelMultipleSelections})
       : assert(calendarController != null),
         assert(availableCalendarFormats.keys.contains(initialCalendarFormat)),
@@ -273,7 +276,9 @@ class _TableCalendarState extends State<TableCalendar>
       widget.calendarController._selectPrevious();
     });
     final selectedDay = widget.calendarController.selectedDay;
-    _selectDay(DateTime(selectedDay.year, selectedDay.month - 1, 1));
+    if (widget.defaultFirstDayOfTheMonth) {
+      _selectDay(DateTime(selectedDay.year, selectedDay.month - 1, 1));
+    }
   }
 
   void _selectNext() {
@@ -281,7 +286,9 @@ class _TableCalendarState extends State<TableCalendar>
       widget.calendarController._selectNext();
     });
     final selectedDay = widget.calendarController.selectedDay;
-    _selectDay(DateTime(selectedDay.year, selectedDay.month + 1, 1));
+    if (widget.defaultFirstDayOfTheMonth) {
+      _selectDay(DateTime(selectedDay.year, selectedDay.month + 1, 1));
+    }
   }
 
   void _selectDay(DateTime day) {
