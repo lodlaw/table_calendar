@@ -375,19 +375,18 @@ class _TableCalendarState extends State<TableCalendar>
     if (widget.selectionMode == SelectionMode.single) {
       paddingTop = widget.calendarStyle.contentPadding.top;
     }
+    // return Placeholder();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         if (widget.headerVisible) _buildHeader(),
         if (widget.extraContent != null) widget.extraContent,
-        Expanded(
-          child: Container(
-            padding:
-                widget.calendarStyle.contentPadding.copyWith(top: paddingTop),
-            margin: widget.calendarStyle.contentMargin,
-            decoration: widget.calendarStyle.contentDecoration,
-            child: _buildCalendarContent(),
-          ),
+        Container(
+          padding:
+              widget.calendarStyle.contentPadding.copyWith(top: paddingTop),
+          margin: widget.calendarStyle.contentMargin,
+          decoration: widget.calendarStyle.contentDecoration,
+          child: _buildCalendarContent(),
         ),
       ],
     );
