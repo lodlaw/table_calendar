@@ -44,7 +44,7 @@ class _CellWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Container(
           child: Container(
-            color: isSelected
+            color: (isSelected && !calendarStyle.isRoundSelected)
                 ? calendarStyle.selectedColor
                 : (isWeekend ? calendarStyle.weekendBackgroundColor : null),
             child: Stack(
@@ -56,11 +56,11 @@ class _CellWidget extends StatelessWidget {
                       width: double.infinity,
                       child: Container(
                         padding: EdgeInsets.all(5.25),
-                        decoration: hasEvent
-                            ? BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: calendarStyle.eventColor)
-                            : null,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: (calendarStyle.isRoundSelected && isSelected)
+                                ? calendarStyle.selectedColor
+                                : hasEvent ? calendarStyle.eventColor : null),
                         child: Text(
                           text,
                           style: _buildCellTextStyle(),
@@ -78,7 +78,7 @@ class _CellWidget extends StatelessWidget {
 
   Decoration _buildCellDecoration() {
     Color color;
-    if (isSelected) {
+    if (isSelected && !calendarStyle.isRoundSelected) {
       color = calendarStyle.selectedColor;
     } else if (isToday) {
       color = calendarStyle.todayColor;

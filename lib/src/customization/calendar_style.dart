@@ -102,6 +102,9 @@ class CalendarStyle {
   /// The margin of the cell
   final double cellMargin;
 
+  /// whether or not the selected cell is a circle
+  final bool isRoundSelected;
+
   const CalendarStyle(
       {this.contentMargin =
           const EdgeInsets.only(bottom: 4.0, left: 0.0, right: 0.0),
@@ -142,5 +145,6 @@ class CalendarStyle {
       this.contentDecoration = const BoxDecoration(),
       this.cancelMultipleSectionsBackground = Colors.blue,
       this.weekendBackgroundColor = const Color(0xFFE4E4E4),
-      this.cellMargin = 3.1});
+      this.cellMargin = 3.1,
+      this.isRoundSelected = false});
 }
