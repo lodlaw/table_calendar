@@ -62,8 +62,8 @@ class _CellWidget extends StatelessWidget {
                                 ? calendarStyle.selectedColor
                                 : hasEvent ? calendarStyle.eventColor : null),
                         child: Text(
-                          key: ValueKey('${text}${isSelected ? "Selected" : ""}'),
                           text,
+                          key: ValueKey('${text}${isSelected ? "Selected" : ""}'),
                           style: _buildCellTextStyle(),
                           textAlign: TextAlign.center,
                         ),
