@@ -781,6 +781,7 @@ class _TableCalendarState extends State<TableCalendar>
           context, date, widget.calendarController.visibleEvents[eventKey]);
     } else {
       return _CellWidget(
+          key: ValueKey('calendarCellDate#${DateFormat("dd/M/yyyy").format(date)}'),
           text: '${date.day}',
           isUnavailable: tIsUnavailable,
           isSelected: tIsSelected,
