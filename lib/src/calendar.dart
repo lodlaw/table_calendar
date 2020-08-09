@@ -399,6 +399,7 @@ class _TableCalendarState extends State<TableCalendar>
         onTap: _selectPrevious,
         margin: widget.headerStyle.leftChevronMargin,
         padding: widget.headerStyle.leftChevronPadding,
+        key: ValueKey('calendarLeftButton'),
       ),
       Expanded(
         child: GestureDetector(
@@ -425,6 +426,7 @@ class _TableCalendarState extends State<TableCalendar>
         onTap: _selectNext,
         margin: widget.headerStyle.rightChevronMargin,
         padding: widget.headerStyle.rightChevronPadding,
+        key: ValueKey('calendarRightButton'),
       ),
     ];
 
