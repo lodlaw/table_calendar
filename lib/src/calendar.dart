@@ -700,14 +700,13 @@ class _TableCalendarState extends State<TableCalendar>
       }
     }
 
+    final isDayUnavailable = _isDayUnavailable(date);
+
     return GestureDetector(
       behavior: widget.dayHitTestBehavior,
-      onTap: () => _isDayUnavailable(date)
-          ? _onUnavailableDaySelected()
-          : _selectDay(date),
-      onLongPress: () => _isDayUnavailable(date)
-          ? _onUnavailableDayLongPressed()
-          : _onDayLongPressed(date),
+      onTap: () => isDayUnavailable ? _selectDay(date) : _selectDay(date),
+      onLongPress: () =>
+          isDayUnavailable ? _onDayLongPressed(date) : _onDayLongPressed(date),
       child: content,
     );
   }
@@ -783,7 +782,8 @@ class _TableCalendarState extends State<TableCalendar>
           context, date, widget.calendarController.visibleEvents[eventKey]);
     } else {
       return _CellWidget(
-          key: ValueKey('calendarCellDate#${DateFormat("dd/M/yyyy").format(date)}'),
+          key: ValueKey(
+              'calendarCellDate#${DateFormat("dd/M/yyyy").format(date)}'),
           text: '${date.day}',
           isUnavailable: tIsUnavailable,
           isSelected: tIsSelected,
