@@ -24,7 +24,7 @@ class HeaderStyle {
   /// ```dart
   /// titleTextBuilder: (date, locale) => DateFormat.yM(locale).format(date),
   /// ```
-  final TextBuilder titleTextBuilder;
+  final TextBuilder? titleTextBuilder;
 
   /// Style for title Text (month-year) displayed in header.
   final TextStyle titleTextStyle;
@@ -39,7 +39,7 @@ class HeaderStyle {
   final EdgeInsets headerPadding;
 
   /// Outside margin of the whole header.
-  final EdgeInsets headerMargin;
+  final EdgeInsets? headerMargin;
 
   /// Inside padding for FormatButton.
   final EdgeInsets formatButtonPadding;
@@ -69,7 +69,7 @@ class HeaderStyle {
   final BoxDecoration decoration;
 
   /// A builder for the calendar header
-  final Widget Function(DateTime focusedDay, dynamic locale) titleBuilder;
+  final Widget Function(DateTime? focusedDay, dynamic locale)? titleBuilder;
 
   const HeaderStyle(
       {this.centerHeaderTitle = false,

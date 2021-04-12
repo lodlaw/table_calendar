@@ -33,7 +33,7 @@ class CalendarStyle {
   final TextStyle unavailableStyle;
 
   /// Style of days that have events
-  final TextStyle eventStyle;
+  final TextStyle? eventStyle;
 
   /// Background Color of selected day.
   final Color selectedColor;
@@ -52,17 +52,17 @@ class CalendarStyle {
   final Alignment markersAlignment;
 
   /// `top` property of `Positioned` widget used for event markers.
-  final double markersPositionTop;
+  final double? markersPositionTop;
 
   /// `bottom` property of `Positioned` widget used for event markers.
   /// NOTE: This defaults to `5.0`, so you might occasionally want to set it to `null`.
   final double markersPositionBottom;
 
   /// `left` property of `Positioned` widget used for event markers.
-  final double markersPositionLeft;
+  final double? markersPositionLeft;
 
   /// `right` property of `Positioned` widget used for event markers.
-  final double markersPositionRight;
+  final double? markersPositionRight;
 
   /// Maximum amount of event markers to be displayed.
   final int markersMaxAmount;
@@ -92,7 +92,7 @@ class CalendarStyle {
   final bool canEventMarkersOverflow;
 
   /// The background color of the cell that has event
-  final Color eventColor;
+  final Color? eventColor;
 
   final Color cancelMultipleSectionsBackground;
 

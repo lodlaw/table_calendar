@@ -13,12 +13,12 @@ class _CellWidget extends StatelessWidget {
   final bool isHoliday;
   final CalendarStyle calendarStyle;
   final bool hasEvent;
-  final double rowHeight;
-  final SelectionMode selectionMode;
+  final double? rowHeight;
+  final SelectionMode? selectionMode;
 
   const _CellWidget({
-    Key key,
-    @required this.text,
+    Key? key,
+    required this.text,
     this.isUnavailable = false,
     this.isSelected = false,
     this.isToday = false,
@@ -26,12 +26,10 @@ class _CellWidget extends StatelessWidget {
     this.isOutsideMonth = false,
     this.isHoliday = false,
     this.hasEvent = false,
-    @required this.selectionMode,
-    @required this.rowHeight,
-    @required this.calendarStyle,
-  })  : assert(text != null),
-        assert(calendarStyle != null),
-        super(key: key);
+    required this.selectionMode,
+    required this.rowHeight,
+    required this.calendarStyle,
+  })  : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +61,7 @@ class _CellWidget extends StatelessWidget {
                                 : hasEvent ? calendarStyle.eventColor : null),
                         child: Text(
                           text,
-                          key: ValueKey('${text}${isSelected ? "Selected" : ""}'),
+                          key: ValueKey('$text${isSelected ? "Selected" : ""}'),
                           style: _buildCellTextStyle(),
                           textAlign: TextAlign.center,
                         ),
@@ -78,7 +76,7 @@ class _CellWidget extends StatelessWidget {
   }
 
   Decoration _buildCellDecoration() {
-    Color color;
+    Color? color;
     if (isSelected && !calendarStyle.isRoundSelected) {
       color = calendarStyle.selectedColor;
     } else if (isToday) {
@@ -89,7 +87,7 @@ class _CellWidget extends StatelessWidget {
     return BoxDecoration(color: color);
   }
 
-  TextStyle _buildCellTextStyle() {
+  TextStyle? _buildCellTextStyle() {
     if (isUnavailable) {
       return calendarStyle.unavailableStyle;
     } else if (isOutsideMonth && isHoliday) {

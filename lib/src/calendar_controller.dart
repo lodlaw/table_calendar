@@ -26,19 +26,19 @@ typedef void _SelectedDayCallback(DateTime day);
 /// ```
 class CalendarController {
   /// Currently focused day (used to determine which year/month should be visible).
-  DateTime get focusedDay => _focusedDay;
+  DateTime? get focusedDay => _focusedDay;
 
   /// Currently selected day.
-  DateTime get selectedDay => _selectedDay;
+  DateTime? get selectedDay => _selectedDay;
 
   /// Currently visible calendar format.
-  CalendarFormat get calendarFormat => _calendarFormat.value;
+  CalendarFormat get calendarFormat => _calendarFormat!.value;
 
   /// List of currently visible days.
   List<DateTime> get visibleDays =>
-      calendarFormat == CalendarFormat.month && !_includeInvisibleDays
-          ? _visibleDays.value.where((day) => !_isExtraDay(day)).toList()
-          : _visibleDays.value;
+      calendarFormat == CalendarFormat.month && !_includeInvisibleDays!
+          ? _visibleDays!.value.where((day) => !_isExtraDay(day)).toList()
+          : _visibleDays!.value;
 
   /// `Map` of currently visible events.
   Map<DateTime, List> get visibleEvents {
@@ -47,7 +47,7 @@ class CalendarController {
     }
 
     return Map.fromEntries(
-      _events.entries.where((entry) {
+      _events!.entries.where((entry) {
         for (final day in visibleDays) {
           if (_isSameDay(day, entry.key)) {
             return true;
@@ -66,7 +66,7 @@ class CalendarController {
     }
 
     return Map.fromEntries(
-      _holidays.entries.where((entry) {
+      _holidays!.entries.where((entry) {
         for (final day in visibleDays) {
           if (_isSameDay(day, entry.key)) {
             return true;
@@ -78,40 +78,39 @@ class CalendarController {
     );
   }
 
-  SelectionMode get selectionMode {
+  SelectionMode? get selectionMode {
     return _selectionMode;
   }
 
-  Map<DateTime, List> _events;
-  Map<DateTime, List> _holidays;
-  DateTime _focusedDay;
-  DateTime _selectedDay;
-  StartingDayOfWeek _startingDayOfWeek;
-  ValueNotifier<CalendarFormat> _calendarFormat;
-  ValueNotifier<List<DateTime>> _visibleDays;
-  Map<CalendarFormat, String> _availableCalendarFormats;
-  DateTime _previousFirstDay;
-  DateTime _previousLastDay;
-  int _pageId;
-  double _dx;
-  bool _useNextCalendarFormat;
-  bool _includeInvisibleDays;
-  _SelectedDayCallback _selectedDayCallback;
-  SelectionMode _selectionMode;
+  Map<DateTime, List>? _events;
+  Map<DateTime, List>? _holidays;
+  DateTime? _focusedDay;
+  DateTime? _selectedDay;
+  late StartingDayOfWeek _startingDayOfWeek;
+  ValueNotifier<CalendarFormat>? _calendarFormat;
+  ValueNotifier<List<DateTime>>? _visibleDays;
+  late Map<CalendarFormat, String> _availableCalendarFormats;
+  late DateTime _previousFirstDay;
+  late DateTime _previousLastDay;
+  late int _pageId;
+  late double _dx;
+  late bool _useNextCalendarFormat;
+  bool? _includeInvisibleDays;
+  _SelectedDayCallback? _selectedDayCallback;
+  SelectionMode? _selectionMode;
 
-  void _init({
-    @required Map<DateTime, List> events,
-    @required Map<DateTime, List> holidays,
-    @required DateTime initialDay,
-    @required CalendarFormat initialFormat,
-    @required Map<CalendarFormat, String> availableCalendarFormats,
-    @required bool useNextCalendarFormat,
-    @required StartingDayOfWeek startingDayOfWeek,
-    @required _SelectedDayCallback selectedDayCallback,
-    @required OnVisibleDaysChanged onVisibleDaysChanged,
-    @required bool includeInvisibleDays,
-    @required SelectionMode selectionMode
-  }) {
+  void _init(
+      {required Map<DateTime, List> events,
+      required Map<DateTime, List> holidays,
+      required DateTime? initialDay,
+      required CalendarFormat initialFormat,
+      required Map<CalendarFormat, String> availableCalendarFormats,
+      required bool useNextCalendarFormat,
+      required StartingDayOfWeek startingDayOfWeek,
+      required _SelectedDayCallback selectedDayCallback,
+      required OnVisibleDaysChanged? onVisibleDaysChanged,
+      required bool includeInvisibleDays,
+      required SelectionMode? selectionMode}) {
     _events = events;
     _holidays = holidays;
     _availableCalendarFormats = availableCalendarFormats;
@@ -129,23 +128,23 @@ class CalendarController {
     _selectedDay = _focusedDay;
     _calendarFormat = ValueNotifier(initialFormat);
     _visibleDays = ValueNotifier(_getVisibleDays());
-    _previousFirstDay = _visibleDays.value.first;
-    _previousLastDay = _visibleDays.value.last;
+    _previousFirstDay = _visibleDays!.value.first;
+    _previousLastDay = _visibleDays!.value.last;
 
-    _calendarFormat.addListener(() {
-      _visibleDays.value = _getVisibleDays();
+    _calendarFormat!.addListener(() {
+      _visibleDays!.value = _getVisibleDays();
     });
 
     if (onVisibleDaysChanged != null) {
-      _visibleDays.addListener(() {
-        if (!_isSameDay(_visibleDays.value.first, _previousFirstDay) ||
-            !_isSameDay(_visibleDays.value.last, _previousLastDay)) {
-          _previousFirstDay = _visibleDays.value.first;
-          _previousLastDay = _visibleDays.value.last;
+      _visibleDays!.addListener(() {
+        if (!_isSameDay(_visibleDays!.value.first, _previousFirstDay) ||
+            !_isSameDay(_visibleDays!.value.last, _previousLastDay)) {
+          _previousFirstDay = _visibleDays!.value.first;
+          _previousLastDay = _visibleDays!.value.last;
           onVisibleDaysChanged(
             _getFirstDay(includeInvisible: _includeInvisibleDays),
             _getLastDay(includeInvisible: _includeInvisibleDays),
-            _calendarFormat.value,
+            _calendarFormat!.value,
           );
         }
       });
@@ -167,15 +166,13 @@ class CalendarController {
 
   /// Toggles calendar format. Same as using `FormatButton`.
   void toggleCalendarFormat() {
-    _calendarFormat.value = _nextFormat();
+    _calendarFormat!.value = _nextFormat();
   }
 
   /// Sets calendar format by emulating swipe.
-  void swipeCalendarFormat({@required bool isSwipeUp}) {
-    assert(isSwipeUp != null);
-
+  void swipeCalendarFormat({required bool isSwipeUp}) {
     final formats = _availableCalendarFormats.keys.toList();
-    int id = formats.indexOf(_calendarFormat.value);
+    int id = formats.indexOf(_calendarFormat!.value);
 
     // Order of CalendarFormats must be from biggest to smallest,
     // eg.: [month, twoWeeks, week]
@@ -184,12 +181,12 @@ class CalendarController {
     } else {
       id = _clamp(0, formats.length - 1, id - 1);
     }
-    _calendarFormat.value = formats[id];
+    _calendarFormat!.value = formats[id];
   }
 
   /// Sets calendar format to a given `value`.
   void setCalendarFormat(CalendarFormat value) {
-    _calendarFormat.value = value;
+    _calendarFormat!.value = value;
   }
 
   /// Sets selected day to a given `value`.
@@ -215,7 +212,7 @@ class CalendarController {
     _updateVisibleDays(isProgrammatic);
 
     if (isProgrammatic && runCallback && _selectedDayCallback != null) {
-      _selectedDayCallback(normalizedDate);
+      _selectedDayCallback!(normalizedDate);
     }
   }
 
@@ -227,21 +224,21 @@ class CalendarController {
 
   void _updateVisibleDays(bool isProgrammatic) {
     if (calendarFormat != CalendarFormat.twoWeeks || isProgrammatic) {
-      _visibleDays.value = _getVisibleDays();
+      _visibleDays!.value = _getVisibleDays();
     }
   }
 
   CalendarFormat _nextFormat() {
     final formats = _availableCalendarFormats.keys.toList();
-    int id = formats.indexOf(_calendarFormat.value);
+    int id = formats.indexOf(_calendarFormat!.value);
     id = (id + 1) % formats.length;
 
     return formats[id];
   }
 
-  String _getFormatButtonText() => _useNextCalendarFormat
+  String? _getFormatButtonText() => _useNextCalendarFormat
       ? _availableCalendarFormats[_nextFormat()]
-      : _availableCalendarFormats[_calendarFormat.value];
+      : _availableCalendarFormats[_calendarFormat!.value];
 
   void _selectPrevious() {
     if (calendarFormat == CalendarFormat.month) {
@@ -252,7 +249,7 @@ class CalendarController {
       _selectPreviousWeek();
     }
 
-    _visibleDays.value = _getVisibleDays();
+    _visibleDays!.value = _getVisibleDays();
     _decrementPage();
   }
 
@@ -265,70 +262,70 @@ class CalendarController {
       _selectNextWeek();
     }
 
-    _visibleDays.value = _getVisibleDays();
+    _visibleDays!.value = _getVisibleDays();
     _incrementPage();
   }
 
   void _selectPreviousMonth() {
-    _focusedDay = _previousMonth(_focusedDay);
+    _focusedDay = _previousMonth(_focusedDay!);
   }
 
   void _selectNextMonth() {
-    _focusedDay = _nextMonth(_focusedDay);
+    _focusedDay = _nextMonth(_focusedDay!);
   }
 
   void _selectPreviousTwoWeeks() {
-    if (_visibleDays.value.take(7).contains(_focusedDay)) {
+    if (_visibleDays!.value.take(7).contains(_focusedDay)) {
       // in top row
-      _focusedDay = _previousWeek(_focusedDay);
+      _focusedDay = _previousWeek(_focusedDay!);
     } else {
       // in bottom row OR not visible
       _focusedDay =
-          _previousWeek(_focusedDay.subtract(const Duration(days: 7)));
+          _previousWeek(_focusedDay!.subtract(const Duration(days: 7)));
     }
   }
 
   void _selectNextTwoWeeks() {
-    if (!_visibleDays.value.skip(7).contains(_focusedDay)) {
+    if (!_visibleDays!.value.skip(7).contains(_focusedDay)) {
       // not in bottom row [eg: in top row OR not visible]
-      _focusedDay = _nextWeek(_focusedDay);
+      _focusedDay = _nextWeek(_focusedDay!);
     }
   }
 
   void _selectPreviousWeek() {
-    _focusedDay = _previousWeek(_focusedDay);
+    _focusedDay = _previousWeek(_focusedDay!);
   }
 
   void _selectNextWeek() {
-    _focusedDay = _nextWeek(_focusedDay);
+    _focusedDay = _nextWeek(_focusedDay!);
   }
 
-  DateTime _getFirstDay({@required bool includeInvisible}) {
-    if (_calendarFormat.value == CalendarFormat.month && !includeInvisible) {
-      return _firstDayOfMonth(_focusedDay);
+  DateTime _getFirstDay({required bool? includeInvisible}) {
+    if (_calendarFormat!.value == CalendarFormat.month && !includeInvisible!) {
+      return _firstDayOfMonth(_focusedDay!);
     } else {
-      return _visibleDays.value.first;
+      return _visibleDays!.value.first;
     }
   }
 
-  DateTime _getLastDay({@required bool includeInvisible}) {
-    if (_calendarFormat.value == CalendarFormat.month && !includeInvisible) {
-      return _lastDayOfMonth(_focusedDay);
+  DateTime _getLastDay({required bool? includeInvisible}) {
+    if (_calendarFormat!.value == CalendarFormat.month && !includeInvisible!) {
+      return _lastDayOfMonth(_focusedDay!);
     } else {
-      return _visibleDays.value.last;
+      return _visibleDays!.value.last;
     }
   }
 
   List<DateTime> _getVisibleDays() {
     if (calendarFormat == CalendarFormat.month) {
-      return _daysInMonth(_focusedDay);
+      return _daysInMonth(_focusedDay!);
     } else if (calendarFormat == CalendarFormat.twoWeeks) {
-      return _daysInWeek(_focusedDay)
+      return _daysInWeek(_focusedDay!)
         ..addAll(_daysInWeek(
-          _focusedDay.add(const Duration(days: 7)),
+          _focusedDay!.add(const Duration(days: 7)),
         ));
     } else {
-      return _daysInWeek(_focusedDay);
+      return _daysInWeek(_focusedDay!);
     }
   }
 
@@ -438,19 +435,17 @@ class CalendarController {
     return DateTime.utc(value.year, value.month, value.day, 12);
   }
 
-  DateTime _getEventKey(DateTime day) {
-    return visibleEvents.keys
-        .firstWhere((it) => _isSameDay(it, day), orElse: () => null);
+  DateTime? _getEventKey(DateTime day) {
+    return visibleEvents.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }
 
-  DateTime _getHolidayKey(DateTime day) {
-    return visibleHolidays.keys
-        .firstWhere((it) => _isSameDay(it, day), orElse: () => null);
+  DateTime? _getHolidayKey(DateTime day) {
+    return visibleHolidays.keys.firstWhereOrNull((it) => _isSameDay(it, day));
   }
 
   /// Returns true if `day` is currently selected.
   bool isSelected(DateTime day) {
-    return _isSameDay(day, selectedDay);
+    return _isSameDay(day, selectedDay!);
   }
 
   /// Returns true if `day` is the same day as `DateTime.now()`.
@@ -482,11 +477,11 @@ class CalendarController {
   }
 
   bool _isExtraDayBefore(DateTime day) {
-    return day.month < _focusedDay.month;
+    return day.month < _focusedDay!.month;
   }
 
   bool _isExtraDayAfter(DateTime day) {
-    return day.month > _focusedDay.month;
+    return day.month > _focusedDay!.month;
   }
 
   int _clamp(int min, int max, int value) {

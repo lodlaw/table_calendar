@@ -6,28 +6,26 @@ part of table_calendar;
 class _CustomIconButton extends StatelessWidget {
   final Icon icon;
   final VoidCallback onTap;
-  final EdgeInsets margin;
-  final EdgeInsets padding;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
 
   const _CustomIconButton({
-    Key key,
-    @required this.icon,
-    @required this.onTap,
+    Key? key,
+    required this.icon,
+    required this.onTap,
     this.margin,
     this.padding,
-  })  : assert(icon != null),
-        assert(onTap != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: margin,
+      padding: margin!,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(100.0),
         child: Padding(
-          padding: padding,
+          padding: padding!,
           child: icon,
         ),
       ),
