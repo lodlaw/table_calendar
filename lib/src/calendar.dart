@@ -264,8 +264,10 @@ class _TableCalendarState extends State<TableCalendar>
 
   void _selectedDayCallback(DateTime day) {
     if (widget.onDaySelected != null) {
-      widget.onDaySelected!(day,
-          widget.calendarController.visibleEvents[_getEventKey(day)!] ?? []);
+      widget.onDaySelected!(
+        day,
+        widget.calendarController.visibleEvents[_getEventKey(day)] ?? [],
+      );
     }
   }
 
