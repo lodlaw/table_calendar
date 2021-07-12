@@ -19,15 +19,24 @@ class _CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: margin!,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(100.0),
-        child: Padding(
-          padding: padding!,
-          child: icon,
-        ),
+    return Padding(padding: margin!, child: _buildButton());
+  }
+
+  Widget _buildButton() {
+    if (Platform.isIOS) {
+      return CupertinoButton(
+        padding: padding,
+        onPressed: onTap,
+        child: icon,
+      );
+    }
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(100.0),
+      child: Padding(
+        padding: padding!,
+        child: icon,
       ),
     );
   }
